@@ -12,5 +12,5 @@
 */
 
 Route::get('/', function () {
-    return redirect('login');
+    return redirect('sp/login');
 });
