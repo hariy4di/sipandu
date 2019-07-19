@@ -2,7 +2,7 @@
 
 return [
 
-    'ADMIN_PATH' => 'admin',
+    'ADMIN_PATH' => '',
 
     /*
         To Allowed Specific User Agent Only
