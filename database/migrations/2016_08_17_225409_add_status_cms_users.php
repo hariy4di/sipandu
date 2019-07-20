@@ -12,7 +12,7 @@ class AddStatusCmsUsers extends Migration
      */
     public function up()
     {
-        Schema::table('cms_users', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
             $table->string('status', 50)->nullable();
         });
@@ -25,7 +25,7 @@ class AddStatusCmsUsers extends Migration
      */
     public function down()
     {
-        Schema::table('cms_users', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
             $table->dropColumn('status');
         });

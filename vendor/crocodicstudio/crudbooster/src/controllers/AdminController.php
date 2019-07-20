@@ -59,7 +59,7 @@ class AdminController extends CBController
     {
 
         $validator = Validator::make(Request::all(), [
-            'email' => 'required|email|exists:'.config('crudbooster.USER_TABLE'),
+            'username' => 'required|alpha_dash|exists:'.config('crudbooster.USER_TABLE'),
             'password' => 'required',
         ]);
 
@@ -69,9 +69,9 @@ class AdminController extends CBController
             return redirect()->back()->with(['message' => implode(', ', $message), 'message_type' => 'danger']);
         }
 
-        $email = Request::input("email");
+        $username = Request::input("username");
         $password = Request::input("password");
-        $users = DB::table(config('crudbooster.USER_TABLE'))->where("email", $email)->first();
+        $users = DB::table(config('crudbooster.USER_TABLE'))->where("username", $username)->first();
 
         if (\Hash::check($password, $users->password)) {
             $priv = DB::table("cms_privileges")->where("id", $users->id_cms_privileges)->first();
@@ -141,7 +141,7 @@ class AdminController extends CBController
     {
 
         $me = CRUDBooster::me();
-        CRUDBooster::insertLog(trans("crudbooster.log_logout", ['email' => $me->email]));
+        CRUDBooster::insertLog(trans("crudbooster.log_logout", ['username' => $me->username]));
 
         Session::flush();
 

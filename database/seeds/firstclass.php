@@ -13,9 +13,9 @@ class firstclass extends Seeder
     {
         {
 
-            if (DB::table('cms_users')->count() == 0) {
+            if (DB::table('users')->count() == 0) {
                 $password = \Hash::make('123456');
-                $cms_users = DB::table('cms_users')->insert([
+                $cms_users = DB::table('users')->insert([
                     'created_at' => date('Y-m-d H:i:s'),
                     'id' => 1,
                     'name' => 'Super Admin',

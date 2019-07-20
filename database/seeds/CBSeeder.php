@@ -13,7 +13,7 @@ class CBSeeder extends Seeder
     {
         $this->command->info('Please wait updating the data...');
 
-        $this->call('Cms_usersSeeder');
+        //$this->call('Cms_usersSeeder');
         $this->call('Cms_modulsSeeder');
         $this->call('Cms_privilegesSeeder');
         $this->call('Cms_privileges_rolesSeeder');
@@ -343,7 +343,7 @@ class Cms_modulsSeeder extends Seeder
                 'name' => trans('crudbooster.Users_Management'),
                 'icon' => 'fa fa-users',
                 'path' => 'users',
-                'table_name' => 'cms_users',
+                'table_name' => 'users',
                 'controller' => 'AdminCmsUsersController',
                 'is_protected' => 0,
                 'is_active' => 1,
@@ -437,22 +437,22 @@ class Cms_modulsSeeder extends Seeder
     }
 }
 
-class Cms_usersSeeder extends Seeder
-{
-    public function run()
-    {
+// class Cms_usersSeeder extends Seeder
+// {
+//     public function run()
+//     {
 
-        if (DB::table('cms_users')->count() == 0) {
-            $password = \Hash::make('123456');
-            $cms_users = DB::table('cms_users')->insert([
-                'created_at' => date('Y-m-d H:i:s'),
-                'name' => 'Super Admin',
-                'email' => 'admin@crudbooster.com',
-                'password' => $password,
-                'id_cms_privileges' => 1,
-                'status' => 'Active',
-            ]);
-        }
-    }
-}
+//         if (DB::table('cms_users')->count() == 0) {
+//             $password = \Hash::make('123456');
+//             $cms_users = DB::table('cms_users')->insert([
+//                 'created_at' => date('Y-m-d H:i:s'),
+//                 'name' => 'Super Admin',
+//                 'email' => 'admin@crudbooster.com',
+//                 'password' => $password,
+//                 'id_cms_privileges' => 1,
+//                 'status' => 'Active',
+//             ]);
+//         }
+//     }
+// }
 

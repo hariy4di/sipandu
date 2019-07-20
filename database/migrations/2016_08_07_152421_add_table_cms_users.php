@@ -12,14 +12,20 @@ class AddTableCmsUsers extends Migration
      */
     public function up()
     {
-        Schema::create('cms_users', function (Blueprint $table) {
+        Schema::dropIfExists('cms_users');
+        Schema::dropIfExists('users');
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
 
+            $table->string('nip')->nullable();
             $table->string('name')->nullable();
             $table->string('photo')->nullable();
+            $table->string('no_hp')->nullable();
             $table->string('email')->nullable();
+            $table->string('username')->nullable();
             $table->string('password')->nullable();
             $table->integer('id_cms_privileges')->nullable();
+            $table->integer('idunit')->nullable();
 
             $table->timestamps();
         });
@@ -32,6 +38,6 @@ class AddTableCmsUsers extends Migration
      */
     public function down()
     {
-        Schema::drop('cms_users');
+        Schema::drop('users');
     }
 }
