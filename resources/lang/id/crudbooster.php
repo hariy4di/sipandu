@@ -12,6 +12,7 @@ return [
     'label_button_profile' => "Profil",
     'filter_dialog_title' => 'Pengurutan dan Filterisasi',
     'there_is_no_option' => 'Anda belum mengatur untuk tipe ini',
+    'no' => 'No.',
 
     'text_enter_the_password' => 'Masukkan password anda',
     'text_or_sign_in' => 'Atau login dengan akun lain',
@@ -24,6 +25,7 @@ return [
     'text_default_help_text' => 'Anda hanya dapat memasukkan huruf saja',
     'text_default_help_url' => 'Mohon masukkan URL yang benar',
     'text_dashboard' => 'Halaman Awal',
+    'text_delete' => 'Hapus',
     'text_prefix_option' => '** Silahkan pilih',
     'text_loading' => 'Silahkan menunggu sebentar...',
 
@@ -73,6 +75,7 @@ return [
     'alert_required' => 'Mohon pastikan anda telah mengisi form dengan benar !',
     'alert_error_ajax' => 'Baiklah ini sangat memalukan, kami akan segera memperbaiki hal ini!',
     'alert_validation_error' => 'Mohon lengkapi form dengan benar: :error',
+    'alert_select_a_data' => 'Mohon pilih setidaknya satu data!',
 
     'add_data_page_title' => 'Tambah :module',
     'edit_data_page_title' => 'Ubah :module',
@@ -108,7 +111,7 @@ return [
     'button_selected_action' => 'Aksi Massal',
     'button_download_file' => 'Unduh file',
     'button_reset' => 'Ulangi',
-    'button_add_to_table' => 'Add To Table',
+    'button_add_to_table' => 'Tambah ke Tabel',
 
     'export_dialog_title' => "Ekspor Data",
     'export_dialog_filename' => 'Nama File',
@@ -140,8 +143,8 @@ return [
     'online' => 'Online',
     'controller_route_404' => 'Controller / Route tidak tersedia',
     'home' => 'Halaman Awal',
-    'Notifications' => 'Notifications',
-    'Privileges' => 'Privileges',
+    'Notifications' => 'Notifikasi',
+    'Privileges' => 'Hak Akses',
     'Privileges_Roles' => 'Detil Hak Akses',
     'Add_New_Privilege' => 'Tambah Hak Akses',
     'List_Privilege' => 'Daftar Hak Akses',
@@ -175,8 +178,8 @@ return [
      * to make it easy to use the the view for rtl langs .
      * unless your language use right-to-left direction , you should keep it as it is :
      */
-    'right' => 'right',
-    'left' => 'left',
+    'right' => 'kanan',
+    'left' => 'kiri',
 
     'all_rights_reserved' => 'All Rights Reserved',
     'copyright' => 'Copyright',
@@ -186,7 +189,7 @@ return [
     'notification_notification' => 'Notifikasi',
     'notification_new' => 'Anda mendapatkan notifikasi baru !',
 
-    'login_register_style' => 'Login Register Style',
+    'login_register_style' => 'Style Login Register',
     'email_setting' => 'Pengaturan Email',
     'application_setting' => 'Pengaturan Aplikasi',
 
@@ -214,6 +217,10 @@ return [
     'filter_from' => 'Dari',
     'filter_to' => 'Ke',
     'filter_sorting' => 'Sorting',
+    'filter_rows_total' => 'Total baris',
+    'filter_rows_to' => 'ke',
+    'filter_rows_of' => 'dari',
+
     // confirmation
     'confirmation_yes' => 'Ya',
     'confirmation_no' => 'Tidak',
@@ -228,16 +235,16 @@ return [
     'confirmButtonText' => 'Ya',
 
     // privilege
-    'privileges_name' => 'Privilege Name',
+    'privileges_name' => 'Hak Akses',
     'privileges_super_admin' => 'Super Admin',
-    'privileges_standart_user' => 'Standart user',
+    'privileges_standart_user' => 'Pengguna Standar',
     'privileges_ID' => 'ID',
-    'set_as_superadmin' => 'Set as Superadmin',
-    'chose_theme_color_select' => '** Choose Backend Theme Color',
-    'chose_theme_color' => ' Theme Color',
-    'privileges_configuration' => 'Privileges Configuration',
+    'set_as_superadmin' => 'Angkat sebagai Superadmin',
+    'chose_theme_color_select' => '** Pilih warna tema backend',
+    'chose_theme_color' => ' Warna Tema',
+    'privileges_configuration' => 'Konfigurasi Hak Akses',
     'privileges_module_list_no' => 'No.',
-    'privileges_module_list_mod_names' => 'Module\'s Name',
+    'privileges_module_list_mod_names' => 'Nama Module',
     'privileges_module_list_view' => 'View',
     'privileges_module_list_create' => 'Create',
     'privileges_module_list_read' => 'Read',
@@ -245,18 +252,18 @@ return [
     'privileges_module_list_delete' => 'Delete',
 
     //datamodal 
-    'datamodal_select' => 'Select',
-    'datamodal_search_and_enter' => 'Search and enter...',
-    'datamodal_enter_to_search' => 'Enter to search',
-    'datamodal_browse_data' => 'Browse Data',
-    'datamodal_browse_file' => 'Browse File',
+    'datamodal_select' => 'Pilih',
+    'datamodal_search_and_enter' => 'Cari dan masuk...',
+    'datamodal_enter_to_search' => 'Masuk untuk mencari',
+    'datamodal_browse_data' => 'Mencari Data',
+    'datamodal_browse_file' => 'Mencari File',
 
     //child 
-    'table_detail' => 'Table Detail',
-    'your_file_size_is_too_big' => 'Your file size is too big',
-    'save_changes' => 'Save Changes',
-    'please_complete_the_form' => 'Please complete the form !',
-    'this_field_is_required' => 'This field is required',
+    'table_detail' => 'Detil Tabel',
+    'your_file_size_is_too_big' => 'File Anda terlalu besar',
+    'save_changes' => 'Simpan Perubahan',
+    'please_complete_the_form' => 'Harap melengkapi form !',
+    'this_field_is_required' => 'Field ini harus diisi',
     'text_form' => 'Form',
-    "your_file_extension_is_not_allowed " => "Your file extension is not allowed !",
+    "your_file_extension_is_not_allowed " => "Ekstensi file Anda tidak valid!",
 ];
