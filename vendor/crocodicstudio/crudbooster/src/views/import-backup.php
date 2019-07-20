@@ -15,27 +15,27 @@
 
         <ul class='nav nav-tabs'>
             <li style="background:#eeeeee"><a style="color:#111"
-                                              onclick="if(confirm('Yakin ingin pergi ?')) location.href='{{ CRUDBooster::mainpath("import-data") }}'"
-                                              href='javascript:;'><i class='fa fa-download'></i> Unggah File &raquo;</a></li>
-            <li style="background:#eeeeee"><a style="color:#111" href='#'><i class='fa fa-cogs'></i> Pengaturan &raquo;</a></li>
-            <li style="background:#ffffff" class='active'><a style="color:#111" href='#'><i class='fa fa-cloud-download'></i> Sedang mengimpor &raquo;</a></li>
+                                              onclick="if(confirm('Are you sure want to leave ?')) location.href='{{ CRUDBooster::mainpath("import-data") }}'"
+                                              href='javascript:;'><i class='fa fa-download'></i> Upload a File &raquo;</a></li>
+            <li style="background:#eeeeee"><a style="color:#111" href='#'><i class='fa fa-cogs'></i> Adjustment &raquo;</a></li>
+            <li style="background:#ffffff" class='active'><a style="color:#111" href='#'><i class='fa fa-cloud-download'></i> Importing &raquo;</a></li>
         </ul>
 
         <!-- Box -->
         <div id='box_main' class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Sedang mengimpor</h3>
+                <h3 class="box-title">Importing</h3>
                 <div class="box-tools">
                 </div>
             </div>
 
             <div class="box-body">
 
-                <p style='font-weight: bold' id='status-import'><i class='fa fa-spin fa-spinner'></i> Mohon tunggu, sedang mengimpor...</p>
+                <p style='font-weight: bold' id='status-import'><i class='fa fa-spin fa-spinner'></i> Please wait importing...</p>
                 <div class="progress">
                     <div id='progress-import' class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="40"
                          aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                        <span class="sr-only">40% Komplit (sukses)</span>
+                        <span class="sr-only">40% Complete (success)</span>
                     </div>
                 </div>
 
@@ -49,10 +49,10 @@
                                 $.post("{{ CRUDBooster::mainpath('do-import-chunk?file='.Request::get('file')) }}", {resume: 1}, function (resp) {
                                     console.log(resp.progress);
                                     $('#progress-import').css('width', resp.progress + '%');
-                                    $('#status-import').html("<i class='fa fa-spin fa-spinner'></i> Mohon tunggu, sedang mengimpor... (" + resp.progress + "%)");
+                                    $('#status-import').html("<i class='fa fa-spin fa-spinner'></i> Please wait importing... (" + resp.progress + "%)");
                                     $('#progress-import').attr('aria-valuenow', resp.progress);
                                     if (resp.progress >= 100) {
-                                        $('#status-import').addClass('text-success').html("<i class='fa fa-check-square-o'></i> Impor Data Lengkap !");
+                                        $('#status-import').addClass('text-success').html("<i class='fa fa-check-square-o'></i> Import Data Completed !");
                                         clearInterval(int_prog);
                                     }
                                 })
@@ -64,7 +64,7 @@
                                 if (resp.status == true) {
                                     $('#progress-import').css('width', '100%');
                                     $('#progress-import').attr('aria-valuenow', 100);
-                                    $('#status-import').addClass('text-success').html("<i class='fa fa-check-square-o'></i> Impor Data Lengkap !");
+                                    $('#status-import').addClass('text-success').html("<i class='fa fa-check-square-o'></i> Import Data Completed !");
                                     clearInterval(int_prog);
                                     $('#upload-footer').show();
                                     console.log('Import Success');
@@ -80,8 +80,8 @@
 
             <div class="box-footer" id='upload-footer' style="display:none">
                 <div class='pull-right'>
-                    <a href='{{ CRUDBooster::mainpath("import-data") }}' class='btn btn-default'><i class='fa fa-upload'></i> Unggah File Lain</a>
-                    <a href='{{CRUDBooster::mainpath()}}' class='btn btn-success'>Selesai</a>
+                    <a href='{{ CRUDBooster::mainpath("import-data") }}' class='btn btn-default'><i class='fa fa-upload'></i> Upload Other File</a>
+                    <a href='{{CRUDBooster::mainpath()}}' class='btn btn-success'>Finish</a>
                 </div>
             </div><!-- /.box-footer-->
 
@@ -92,16 +92,16 @@
 
         <ul class='nav nav-tabs'>
             <li style="background:#eeeeee"><a style="color:#111"
-                                              onclick="if(confirm('Yakin ingin pergi ?')) location.href='{{ CRUDBooster::mainpath("import-data") }}'"
-                                              href='javascript:;'><i class='fa fa-download'></i> Unggah sebuah File &raquo;</a></li>
-            <li style="background:#ffffff" class='active'><a style="color:#111" href='#'><i class='fa fa-cogs'></i> Pengaturan &raquo;</a></li>
-            <li style="background:#eeeeee"><a style="color:#111" href='#'><i class='fa fa-cloud-download'></i> Sedang mengimpor &raquo;</a></li>
+                                              onclick="if(confirm('Are you sure want to leave ?')) location.href='{{ CRUDBooster::mainpath("import-data") }}'"
+                                              href='javascript:;'><i class='fa fa-download'></i> Upload a File &raquo;</a></li>
+            <li style="background:#ffffff" class='active'><a style="color:#111" href='#'><i class='fa fa-cogs'></i> Adjustment &raquo;</a></li>
+            <li style="background:#eeeeee"><a style="color:#111" href='#'><i class='fa fa-cloud-download'></i> Importing &raquo;</a></li>
         </ul>
 
         <!-- Box -->
         <div id='box_main' class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Pengaturan</h3>
+                <h3 class="box-title">Adjustment</h3>
                 <div class="box-tools">
 
                 </div>
@@ -121,8 +121,8 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="box-body table-responsive no-padding">
                     <div class='callout callout-info'>
-                        * Abaikan kolom di mana Anda tidak yakin data tersebut sesuai dengan kolomnya.<br/>
-                        * Peringatan!, Sayangnya saat ini, sistem tidak dapat mengimpor kolom yang berisi url gambar atau foto.
+                        * Just ignoring the column where you are not sure the data is suit with the column or not.<br/>
+                        * Warning !, Unfortunately at this time, the system can't import column that contains image or photo url.
                     </div>
                     @push('head')
                         <style type="text/css">
@@ -140,7 +140,7 @@
                                 if ($column == 'id' || $column == 'created_at' || $column == 'updated_at' || $column == 'deleted_at') continue;
                                 if (substr($column, 0, 3) == 'id_') {
                                     $relational_table = substr($column, 3);
-                                    $help = "<a href='#' title='Ini adalah foreign key, sehingga Sistem akan memasukkan data baru ke tabel `$relational_table` jika tidak ada'><strong>(?)</strong></a>";
+                                    $help = "<a href='#' title='This is foreign key, so the System will be inserting new data to table `$relational_table` if doesn`t exists'><strong>(?)</strong></a>";
                                 }
                                 ?>
                                 <th data-no-column='{{$k}}'>{{ $column }} {!! $help !!}</th>
@@ -154,7 +154,7 @@
                                 <?php if ($column == 'id' || $column == 'created_at' || $column == 'updated_at' || $column == 'deleted_at') continue;?>
                                 <td data-no-column='{{$k}}'>
                                     <select style='width:120px' class='form-control select_column' name='select_column[{{$k}}]'>
-                                        <option value=''>** Set Kolom untuk {{$column}}</option>
+                                        <option value=''>** Set Column for {{$column}}</option>
                                         @foreach($data_import_column as $import_column)
                                             <option value='{{$import_column}}'>{{$import_column}}</option>
                                         @endforeach
@@ -188,7 +188,7 @@
                                 if (n) total_selected_column = total_selected_column + 1;
                             })
                             if (total_selected_column == 0) {
-                                swal("Oops...", "Harap setidaknya 1 kolom yang harus disesuaikan...", "error");
+                                swal("Oops...", "Please at least 1 column that should adjusted...", "error");
                                 return false;
                             } else {
                                 return true;
@@ -199,9 +199,9 @@
 
                 <div class="box-footer">
                     <div class='pull-right'>
-                        <a onclick="if(confirm('Yakin ingin pergi ?')) location.href='{{ CRUDBooster::mainpath("import-data") }}'" href='javascript:;'
-                           class='btn btn-default'>Batal</a>
-                        <input type='submit' class='btn btn-primary' name='submit' onclick='return check_selected_column()' value='Impor Data'/>
+                        <a onclick="if(confirm('Are you sure want to leave ?')) location.href='{{ CRUDBooster::mainpath("import-data") }}'" href='javascript:;'
+                           class='btn btn-default'>Cancel</a>
+                        <input type='submit' class='btn btn-primary' name='submit' onclick='return check_selected_column()' value='Import Data'/>
                     </div>
                 </div><!-- /.box-footer-->
             </form>
@@ -213,16 +213,16 @@
     @if(!Request::get('file'))
         <ul class='nav nav-tabs'>
             <li style="background:#ffffff" class='active'><a style="color:#111"
-                                                             onclick="if(confirm('Yakin ingin pergi ?')) location.href='{{ CRUDBooster::mainpath("import-data") }}'"
-                                                             href='javascript:;'><i class='fa fa-download'></i> Unggah File &raquo;</a></li>
-            <li style="background:#eeeeee"><a style="color:#111" href='#'><i class='fa fa-cogs'></i> Pengaturan &raquo;</a></li>
-            <li style="background:#eeeeee"><a style="color:#111" href='#'><i class='fa fa-cloud-download'></i> Sedang mengimpor &raquo;</a></li>
+                                                             onclick="if(confirm('Are you sure want to leave ?')) location.href='{{ CRUDBooster::mainpath("import-data") }}'"
+                                                             href='javascript:;'><i class='fa fa-download'></i> Upload a File &raquo;</a></li>
+            <li style="background:#eeeeee"><a style="color:#111" href='#'><i class='fa fa-cogs'></i> Adjustment &raquo;</a></li>
+            <li style="background:#eeeeee"><a style="color:#111" href='#'><i class='fa fa-cloud-download'></i> Importing &raquo;</a></li>
         </ul>
 
         <!-- Box -->
         <div id='box_main' class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Unggah File</h3>
+                <h3 class="box-title">Upload a File</h3>
                 <div class="box-tools">
 
                 </div>
@@ -243,25 +243,26 @@
                 <div class="box-body">
 
                     <div class='callout callout-success'>
-                        <h4> Selamat Datang di Alat Pengimpor Data </h4>
-                         Sebelum melakukan unggah file, sebaiknya baca petunjuk di bawah ini: <br/>
-                         * Format file harus: xls, xlsx, atau csv <br/>
-                         * Jika Anda memiliki data file besar, kami tidak dapat menjamin. Jadi, tolong bagi file-file itu menjadi beberapa bagian file (maks 5 MB). <br/>
-                         * Alat ini menghasilkan data secara otomatis, jadi berhati-hatilah dengan struktur tabel xls Anda. Harap pastikan struktur tabel benar. <br/>
-                         * Struktur tabel: Baris 1 adalah kolom tajuk, dan selanjutnya adalah data.
+                        <h4>Welcome to Data Importer Tool</h4>
+                        Before doing upload a file, its better to read this bellow instructions : <br/>
+                        * File format should be : xls or xlsx or csv<br/>
+                        * If you have a big file data, we can't guarantee. So, please split those files into some parts of file (at least max 5 MB).<br/>
+                        * This tool is generate data automatically so, be carefull about your table xls structure. Please make sure correctly the table
+                        structure.<br/>
+                        * Table structure : Line 1 is heading column , and next is the data. (For example, you can export any module you wish to XLS format)
                     </div>
 
                     <div class='form-group'>
                         <label>File XLS / CSV</label>
                         <input type='file' name='userfile' class='form-control' required/>
-                        <div class='help-block'>Hanya mendukung tipe file : XLS, XLSX, CSV</div>
+                        <div class='help-block'>File type supported only : XLS, XLSX, CSV</div>
                     </div>
                 </div><!-- /.box-body -->
 
                 <div class="box-footer">
                     <div class='pull-right'>
-                        <a href='{{ CRUDBooster::mainpath() }}' class='btn btn-default'>Batal</a>
-                        <input type='submit' class='btn btn-primary' name='submit' value='Unggah'/>
+                        <a href='{{ CRUDBooster::mainpath() }}' class='btn btn-default'>Cancel</a>
+                        <input type='submit' class='btn btn-primary' name='submit' value='Upload'/>
                     </div>
                 </div><!-- /.box-footer-->
             </form>

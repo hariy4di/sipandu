@@ -178,8 +178,8 @@ return [
      * to make it easy to use the the view for rtl langs .
      * unless your language use right-to-left direction , you should keep it as it is :
      */
-    'right' => 'kanan',
-    'left' => 'kiri',
+    'right' => 'right',
+    'left' => 'left',
 
     'all_rights_reserved' => 'All Rights Reserved',
     'copyright' => 'Copyright',
