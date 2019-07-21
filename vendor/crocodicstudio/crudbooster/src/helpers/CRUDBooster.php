@@ -693,6 +693,8 @@ class CRUDBooster
         \Config::set('mail.port', self::getSetting('smtp_port'));
         \Config::set('mail.username', self::getSetting('smtp_username'));
         \Config::set('mail.password', self::getSetting('smtp_password'));
+        \Config::set('mail.encryption', self::getSetting('smtp_encryption'));
+
 
         $html = $queue->email_content;
         $to = $queue->email_recipient;
@@ -734,6 +736,7 @@ class CRUDBooster
         \Config::set('mail.port', self::getSetting('smtp_port'));
         \Config::set('mail.username', self::getSetting('smtp_username'));
         \Config::set('mail.password', self::getSetting('smtp_password'));
+        \Config::set('mail.encryption', self::getSetting('smtp_encryption'));
 
         $to = $config['to'];
         $data = $config['data'];
