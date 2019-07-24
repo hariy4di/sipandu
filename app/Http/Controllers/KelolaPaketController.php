@@ -4,8 +4,9 @@
 	use Request;
 	use DB;
 	use CRUDBooster;
+	use Jenssegers\Date\Date;
 
-	class AdminPaketController extends \crocodicstudio\crudbooster\controllers\CBController {
+	class KelolaPaketController extends \crocodicstudio\crudbooster\controllers\CBController {
 
 	    public function cbInit() {
 
@@ -15,13 +16,13 @@
 			$this->orderby = "id,desc";
 			$this->global_privilege = false;
 			$this->button_table_action = true;
-			$this->button_bulk_action = true;
+			$this->button_bulk_action = false;
 			$this->button_action_style = "button_icon";
-			$this->button_add = true;
+			$this->button_add = false;
 			$this->button_edit = true;
 			$this->button_delete = true;
-			$this->button_detail = true;
-			$this->button_show = true;
+			$this->button_detail = false;
+			$this->button_show = false;
 			$this->button_filter = true;
 			$this->button_import = false;
 			$this->button_export = false;
@@ -30,37 +31,38 @@
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
+			$this->col[] = ["label"=>"ID Paket","name"=>"id"];
 			$this->col[] = ["label"=>"Paket","name"=>"ket_paket"];
 			$this->col[] = ["label"=>"Tanggal Terima","name"=>"wkt_terima"];
 			$this->col[] = ["label"=>"Petugas Penerima","name"=>"idUser_petugas_terima","join"=>"users,name"];
 			$this->col[] = ["label"=>"Pegawai Tujuan","name"=>"idUser_pegawai_terima","join"=>"users,name"];
-			$this->col[] = ["label"=>"Unit Tujuan","name"=>"idUser_pegawai_terima","join"=>"users,idunit.direktorat"];
+			$this->col[] = ["label"=>"Unit Tujuan","name"=>"idUser_pegawai_terima","join"=>"users,name","join"=>"unit,direktorat"];
 			$this->col[] = ["label"=>"Tanggal Penyerahan","name"=>"wkt_serah"];
-			$this->col[] = ["label"=>"Petugas Serah","name"=>"idUser_petugas_serah","join"=>"users,name"];
-			$this->col[] = ["label"=>"Pegawai Penerima","name"=>"idUser_pegawai_serah","join"=>"users,name"];
-			$this->col[] = ["label"=>"Unit Penerima","name"=>"idUser_pegawai_serah","join"=>"users,idunit.direktorat"];
+			$this->col[] = ["label"=>"Petugas Penyerahan","name"=>"idUser_petugas_serah","join"=>"users,name"];
+			$this->col[] = ["label"=>"Diterima oleh","name"=>"idUser_pegawai_serah","join"=>"users,name"];
+			$this->col[] = ["label"=>"Unit Penerima","name"=>"idUser_pegawai_serah","join"=>"users,name", "join"=>"unit,direktorat"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'Detil Paket','name'=>'ket_paket','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Tanggal Terima','name'=>'wkt_terima','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Paket','name'=>'ket_paket','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Tanggal Terima','name'=>'wkt_terima','type'=>'date','validation'=>'required','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Petugas Penerima','name'=>'idUser_petugas_terima','type'=>'hidden','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Pegawai Tujuan','name'=>'idUser_pegawai_terima','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'users,name','datatable_where'=>'id_cms_privileges = 2','datatable_format'=>'name," - ",idunit'];
-			$this->form[] = ['label'=>'Tanggal Penyerahan','name'=>'wkt_serah','type'=>'date','validation'=>'date','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Petugas yang Menyerahkan','name'=>'idUser_petugas_serah','type'=>'hidden','validation'=>'integer|min:0','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Pegawai yang Menerima','name'=>'idUser_pegawai_serah','type'=>'select2','validation'=>'integer|min:0','width'=>'col-sm-10','datatable'=>'users,name','datatable_where'=>'id_cms_privileges = 2','datatable_format'=>'name," - ",idunit'];
+			$this->form[] = ['label'=>'Pegawai Tujuan','name'=>'idUser_pegawai_terima','type'=>'select','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Tanggal Penyerahan','name'=>'wkt_serah','type'=>'date','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Petugas Penyerahan','name'=>'idUser_petugas_serah','type'=>'hidden','validation'=>'integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Diterima oleh','name'=>'idUser_pegawai_serah','type'=>'select','validation'=>'integer|min:0','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
-			//$this->form[] = ['label'=>'Detil Paket','name'=>'ket_paket','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Tanggal Terima','name'=>'wkt_terima','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Paket','name'=>'ket_paket','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Tanggal Terima','name'=>'wkt_terima','type'=>'date','validation'=>'required','width'=>'col-sm-10'];
 			//$this->form[] = ['label'=>'Petugas Penerima','name'=>'idUser_petugas_terima','type'=>'hidden','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Pegawai Tujuan','name'=>'idUser_pegawai_terima','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'vw_users,nama','datatable_where'=>'id_cms_privileges = 2','datatable_format'=>'nama," - ",direktorat'];
-			//$this->form[] = ['label'=>'Tanggal Penyerahan','name'=>'wkt_serah','type'=>'date','validation'=>'date','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Petugas yang Menyerahkan','name'=>'idUser_petugas_serah','type'=>'hidden','validation'=>'integer|min:0','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Pegawai yang Menerima','name'=>'idUser_pegawai_serah','type'=>'select2','validation'=>'integer|min:0','width'=>'col-sm-10','datatable'=>'vw_users,nama','datatable_where'=>'id_cms_privileges = 2','datatable_format'=>'nama," - ",direktorat'];
+			//$this->form[] = ['label'=>'Pegawai Tujuan','name'=>'idUser_pegawai_terima','type'=>'datamodal','validation'=>'required|integer|min:0','width'=>'col-sm-10','datamodal_table'=>'vw_users','datamodal_columns'=>'name,direktorat','datamodal_size'=>'small','datamodal_where'=>'id_cms_privileges = 2','datamodal_columns_alias_name'=>'Nama,Direktorat'];
+			//$this->form[] = ['label'=>'Tanggal Penyerahan','name'=>'wkt_serah','type'=>'date','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Petugas Penyerahan','name'=>'idUser_petugas_serah','type'=>'hidden','validation'=>'integer|min:0','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Diterima oleh','name'=>'idUser_pegawai_serah','type'=>'datamodal','validation'=>'integer|min:0','width'=>'col-sm-10'];
 			# OLD END FORM
 
 			/* 
@@ -222,9 +224,49 @@
 	        $this->load_css = array();
 	        
 	        
-	    }
+		}
+		public function getIndex() {
+			//First, Add an auth
+			 if(!CRUDBooster::isView()) CRUDBooster::redirect(CRUDBooster::adminPath(),trans('crudbooster.denied_access'));
+			 
+			 //Create your own query 
+			 $data = [];
+			 $data['page_title'] = 'Kelola Paket';
+			 $data['result'] = DB::table('paket')->orderby('id','desc')->paginate(20);
+			  
+			 //Create a view. Please use `cbView` method instead of view method from laravel.
+			 $this->cbView('kelolaPaket',$data);
+		  }
 
+		public function getTerima(){
+			if(!CRUDBooster::isCreate() && $this->global_privilege==FALSE || $this->button_add==FALSE) {    
+				CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
+			  }
+			  
+			  $data = [];
+			$data['page_title'] = "Terima Paket";
+			$data['idUser_pegawai_terima'] = DB::table('users')
+					  ->leftjoin('unit','users.idunit','=','unit.id')
+					  ->where('id_cms_privileges',2)
+					  ->get();
+			$this->cbView('terimaPaket',$data);
+		}
 
+		public function getEdit($id){
+			//Create an Auth
+  			if(!CRUDBooster::isUpdate() && $this->global_privilege==FALSE || $this->button_edit==FALSE) {    
+    			CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
+ 			 }		
+			  $data = [];
+			$data['page_title'] = "Serah Paket";
+			$data['row']        = DB::table('paket')->where('id',$id)->first();
+			$data['idUser_pegawai_serah'] = DB::table('users')
+					  ->leftjoin('unit','users.idunit','=','unit.id')
+					  ->select('users.id','users.name','users.no_hp','unit.direktorat')
+					  ->where('id_cms_privileges',2)
+					  ->get();
+			$this->cbView('serahPaket',$data);
+		}
 	    /*
 	    | ---------------------------------------------------------------------- 
 	    | Hook for button selected
