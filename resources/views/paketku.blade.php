@@ -30,7 +30,7 @@ $(document).ready(function() {
 @section('content')
 <div class="panel panel-default">
   <div class="panel-heading">
-      <h1><i class="fa fa-truck"></i> {!! $page_title or "Page Title" !!}</h1>
+      <h1><i class="fa fa-dropbox"></i> {!! $page_title or "Page Title" !!}</h1>
   </div>
   <div class="panel-body">
       <table id="table" class="table table-striped table-hover" style="width:100%" data-page-length="25" data-order="[[ 0, &quot;desc&quot; ]]">
@@ -38,32 +38,42 @@ $(document).ready(function() {
       <tr>
         <th>ID Paket</th>
         <th>Detil Paket</th>
-        <th>Pegawai Tujuan</th>
-        <th>Unit</th>
-        <th>Aksi</th>
+        <th>Tgl. Sampai</th>
+        <th>Petugas Penerima</th>
+        <th>Aksi dan Status</th>
+
        </tr>
     </thead>
     <tbody>
       @foreach($result as $row)
       <tr>
+          @if(empty($row->id02))
         <td class="lead text-success">{{$row->id}}</td>
+        @endif
+        @if($row->id02)
+        <td class="lead text-success">{{$row->id02}}</td>
+        @endif
         <td>{{$row->ket_paket}}</td>
-        <td>{{DB::table('users')->where('id',$row->idUser_pegawai_terima)->value('name')}}</td>
-        <td>{{DB::table('users')->join('unit','users.idunit','=','unit.id')->where('users.id',$row->idUser_pegawai_terima)->value('unit.direktorat')}}</td>
+        <?php 
+            $date = new Date($row->wkt_terima);
+        ?>
+        <td>{{$date->format('d-m-Y')}}</td>
+        <td>{{DB::table('users')->where('id',$row->idUser_petugas_terima)->value('name')}}</td>
         <td style="width:18%">
           <!-- To make sure we have read access, wee need to validate the privilege -->
+          @if(empty($row->id02))
           <a class='btn btn-primary btn-sm' href='{{CRUDBooster::mainpath("detail/$row->id")}}'><i class="fa fa-eye"></i> Detil</a>
-          @if(CRUDBooster::isUpdate() && $button_edit && empty($row->idUser_petugas_serah))
-          <a class='btn btn-success btn-sm' href='{{CRUDBooster::mainpath("edit/$row->id")}}'><i class="fa fa-dropbox"></i> Penyerahan</a>
           @endif
-          
-          @if(CRUDBooster::isDelete() && $button_edit && empty($row->idUser_pegawai_serah))
-          <a class='btn btn-danger btn-sm' href='{{CRUDBooster::mainpath("delete/$row->id")}}'><i class="fa fa-trash"></i> Hapus</a>
+          @if($row->id02)
+          <a class='btn btn-primary btn-sm' href='{{CRUDBooster::mainpath("detail/$row->id02")}}'><i class="fa fa-eye"></i> Detil</a>
           @endif
-
           @if($row->idUser_pegawai_serah)
           <i class="fa fa-check text-success"> Sudah Diserahkan</i>
           @endif
+          @if (empty($row->idUser_pegawai_serah))
+          <i class="fa fa-times text-danger"> Belum Diserahkan</i>
+          @endif
+          
         </td>
        </tr>
       @endforeach

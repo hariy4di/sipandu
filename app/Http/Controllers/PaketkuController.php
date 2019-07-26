@@ -5,10 +5,8 @@
 	use DB;
 	use CRUDBooster;
 	use Jenssegers\Date\Date;
-use SebastianBergmann\Environment\Console;
-use Symfony\Component\Console\Logger\ConsoleLogger;
 
-class KelolaPaketController extends \crocodicstudio\crudbooster\controllers\CBController {
+	class PaketkuController extends \crocodicstudio\crudbooster\controllers\CBController {
 
 	    public function cbInit() {
 
@@ -227,51 +225,21 @@ class KelolaPaketController extends \crocodicstudio\crudbooster\controllers\CBCo
 	        
 	        
 		}
-		public function getIndex() {
-			//First, Add an auth
-			 if(!CRUDBooster::isView()) CRUDBooster::redirect(CRUDBooster::adminPath(),trans('crudbooster.denied_access'));
-			 
-			 //Create your own query 
-			 $data = [];
-			 $data['page_title'] = 'Kelola Paket';
-			 $data['result'] = DB::table('paket')->orderby('id','desc')->paginate(20);
-			  
-			 //Create a view. Please use `cbView` method instead of view method from laravel.
-			 $this->cbView('kelolaPaket',$data);
-		  }
 
-		public function getAdd(){
-			if(!CRUDBooster::isCreate() && $this->global_privilege==FALSE || $this->button_add==FALSE) {    
-				CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
-			  }
-			  
-			  $data = [];
-			$data['page_title'] = "Terima Paket";
-			$data['idUser_pegawai_terima'] = DB::table('users')
-					  ->leftjoin('unit','users.idunit','=','unit.id')
-					  ->select('users.id','users.name','users.no_hp','unit.direktorat')
-					  ->where('id_cms_privileges',2)
-					  ->get();
-			$this->cbView('terimaPaket',$data);
-		}
+		
 
-		public function getEdit($id){
+		public function getIndex(){
 			//Create an Auth
-  			if(!CRUDBooster::isUpdate() && $this->global_privilege==FALSE || $this->button_edit==FALSE) {    
+			if(!CRUDBooster::isView() && $this->global_privilege==FALSE || $this->button_edit==FALSE) {    
     			CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
- 			 }		
+			  }
 			  $data = [];
-			$data['page_title'] = "Serah Paket";
-			$data['row']        = DB::table('paket')->where('id',$id)->first();
-			$data['idUser_pegawai_serah'] = DB::table('users')
-					  ->leftjoin('unit','users.idunit','=','unit.id')
-					  ->select('users.id','users.name','users.no_hp','unit.direktorat')
-					  ->where('id_cms_privileges',2)
-					  ->get();
-			$this->cbView('serahPaket',$data);
-		}
-
-		public function getDetail($id){
+			  $data['page_title'] = "Paket Saya";
+			  $data['result'] = DB::table('vw_paketku')->where('idUser_pegawai_terima','=',CRUDBooster::myId())->get();
+			  $this->cbView('paketku', $data);
+        }
+        
+        public function getDetail($id){
 			//Create an Auth
 			if(!CRUDBooster::isView() && $this->global_privilege==FALSE || $this->button_edit==FALSE) {    
     			CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
@@ -338,22 +306,8 @@ class KelolaPaketController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    | 
 	    */
 	    public function hook_after_add($id) {        
-	        $config['content'] = "Ada sebuah paket untuk Anda dengan ID: $id";
-			$config['to'] = CRUDBooster::adminPath('paketku');
-			$config['id_cms_users'] = [DB::table('paket')->where('id',$id)->value('idUser_pegawai_terima')]; //The Id of the user that is going to receive notification. This could be an array of id users [1,2,3,4,5]
-			CRUDBooster::sendNotification($config);
+	        //Your code here
 
-			$data= DB::table('paket')
-						->join('users','paket.idUser_pegawai_terima','=','users.id')
-						->join('unit','users.idunit','=','unit.id')
-						->select('paket.id as id','paket.ket_paket as ket_paket','users.id as idUser','unit.id as unitId','users.name as name','unit.direktorat as direktorat','users.email as email')
-						->where('paket.id',$id)
-						->first();
-
-				CRUDBooster::sendEmail(['to'=>$data->email,'data'=>$data,'template'=>'paket-baru','attachments'=>[]]);
-				//dd($datas);
-
-			
 	    }
 
 	    /* 
@@ -401,7 +355,7 @@ class KelolaPaketController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    | 
 	    */
 	    public function hook_after_delete($id) {
-			//Your code here
+	        //Your code here
 
 	    }
 

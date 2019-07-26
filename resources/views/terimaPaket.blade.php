@@ -30,7 +30,7 @@
     <script>
         var lang = '{{App::getLocale()}}';
         $(document).ready(function() {
-        $('#idUser_pegawai_terima').select2();
+        $('.select2').select2();
         $('.input_date').datepicker({
                 format: 'yyyy-mm-dd',
                 @if (in_array(App::getLocale(), ['ar', 'fa']))
@@ -49,7 +49,7 @@
 @section('content')
 <!-- Your html goes here -->
 <div class="panel panel-default">
-    <div class="panel-heading"><strong><i class="{{CRUDBooster::getCurrentModule()->icon}}"></i> {!! $page_title or "Page Title" !!}</strong></div>
+    <div class="panel-heading"></div>
         <form class="form-horizontal" method="POST" action="{{CRUDBooster::mainpath('add-save')}}">
             <div class="panel-body">
                 
@@ -77,10 +77,10 @@
                     <div class="form-group">
                         <label for="idUser_pegawai_terima" class="col-sm-2 control-label">Pegawai Tujuan</label>
                         <div class="col-sm-10">
-                        <select id="idUser_pegawai_terima" name="idUser_pegawai_terima" class="form-control">
+                        <select id="idUser_pegawai_terima" name="idUser_pegawai_terima" class="select2 form-control">
                             <option value="">** Silahkan Pilih Pegawai Tujuan</option>
-                                @foreach ($idUser_pegawai_terima as $u)
-                        <option value="{{$u->id}}">{{$u->name}} - {{$u->direktorat}} - {{$u->no_hp}}</option>
+                                @foreach ($idUser_pegawai_terima as $s)
+                        <option value="{{$s->id}}">{{$s->name}} - {{$s->direktorat}} - {{$s->no_hp}}</option>
                                 @endforeach
                         </select>
                         </div>
@@ -90,6 +90,13 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2"></label>
                     <div class="col-sm-10">
+                            @if(g('return_url'))
+                            <a href='{{g("return_url")}}' class='btn btn-default'><i
+                                        class='fa fa-chevron-circle-left'></i> {{trans("crudbooster.button_back")}}</a>
+                        @else
+                            <a href='{{CRUDBooster::mainpath("?".http_build_query(@$_GET)) }}' class='btn btn-default'><i
+                                        class='fa fa-chevron-circle-left'></i> {{trans("crudbooster.button_back")}}</a>
+                        @endif
                         <input type="submit" class="btn btn-success" value="Simpan"/>
                     </div>
                 </div>
