@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{{trans("crudbooster.page_title_forgot")}} : {{$appname}}</title>
+    <title>{{trans("crudbooster.page_title_forgot")}} : {{CRUDBooster::getSetting('appname')}}</title>
     <meta name='generator' content='CRUDBooster.com'/>
     <meta name='robots' content='noindex,nofollow'/>
     <link rel="shortcut icon"
