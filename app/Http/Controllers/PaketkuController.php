@@ -234,6 +234,7 @@
     			CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
 			  }
 			  $data = [];
+			  $data['isunit'] = 0;
 			  $data['page_title'] = "Paket Saya";
 			  $data['result'] = DB::table('vw_paketku')->where('idUser_pegawai_terima','=',CRUDBooster::myId())->get();
 			  $this->cbView('paketku', $data);

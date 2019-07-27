@@ -233,6 +233,7 @@
     			CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
 			  }
 			  $data = [];
+			  $data['isunit'] = 1;
 			  $data['page_title'] = "Paket di Unit Saya";
 			  $data['result'] = DB::table('vw_perunit')->whereRaw('idunit = (select idunit from users where id = ?)',[CRUDBooster::myId()])->get();
 			  //dd($data);

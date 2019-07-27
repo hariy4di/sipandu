@@ -38,6 +38,9 @@ $(document).ready(function() {
       <tr>
         <th>ID Paket</th>
         <th>Detil Paket</th>
+        @if ($isunit == 1)
+          <th>Tujuan</th> 
+        @endif
         <th>Tgl. Sampai</th>
         <th>Petugas Penerima</th>
         <th>Aksi dan Status</th>
@@ -54,6 +57,9 @@ $(document).ready(function() {
         <td class="lead text-success">{{$row->id02}}</td>
         @endif
         <td>{{$row->ket_paket}}</td>
+        @if ($row->id02)
+          <td>{{DB::table('users')->where('id',$row->idUser_pegawai_terima)->value('name')}}</td>  
+        @endif
         <?php 
             $date = new Date($row->wkt_terima);
         ?>
