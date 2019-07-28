@@ -4,8 +4,9 @@
     use DB;
     use CRUDBooster;
     use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Route;
 
-    class DashboardsController extends \crocodicstudio\crudbooster\controllers\CBController {
+class DashboardsController extends \crocodicstudio\crudbooster\controllers\CBController {
         
         public function cbInit() {
             # START CONFIGURATION DO NOT REMOVE THIS LINE
@@ -170,14 +171,15 @@
                 }
                 
                 public function getIndex() {
-                    if(!Session('admin_id'))return redirect()->route('getLogin')->with('message', trans('Tolong identifikasi diri Anda !'));
+                    if(!Session('admin_id')) {return redirect()->route('getLogin')->with('message', trans('Tolong identifikasi diri Anda !'));}
                     if ( CRUDBooster::myPrivilegeId() == '1'  ) {
                         // Create a view. Please use `cbView` method instead of view method from laravel.
-                        $this->cbView('admin_dashboard',compact('admin'));
+                        $data=[];
+                        $data['page_title'] = 'Selamat datang super admin';
+                        $this->cbView('admin_dashboard',$data);
                     } elseif ( CRUDBooster::myPrivilegeId() == '2' ) {
                         // Create a view. Please use `cbView` method instead of view method from laravel.
-                        
-                        return redirect()->route('statistik');
+                        return redirect()->action('\crocodicstudio\crudbooster\controllers\StatisticBuilderController@getShowDashboard',[],302,['/']);
                     } elseif ( CRUDBooster::myPrivilegeId() == '3' ) {
                         // Create a view. Please use `cbView` method instead of view method from laravel.
                         return redirect()->action('KelolaPaketController@getIndex',[],302,['/']);

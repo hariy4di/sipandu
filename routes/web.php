@@ -15,8 +15,7 @@ use crocodicstudio\crudbooster\helpers\CRUDBooster;
 Route::get('/', function () {
     return redirect(config('crudbooster.ADMIN_PATH').'/login');
 });
-
 Route::get('/'.config('crudbooster.ADMIN_PATH'),'DashboardsController@getIndex')->name('dashboard');
 
-Route::get('/','\crocodicstudio\crudbooster\controllers\StatisticBuilderController@getShowDashboard')->name('statistik');
+
 
