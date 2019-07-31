@@ -30,7 +30,8 @@ $(document).ready(function() {
 @section('content')
 <div class="panel panel-default">
   <div class="panel-heading">
-      <h1><i class="fa fa-truck"></i> {!! $page_title or "Page Title" !!}</h1>
+      {{-- <h1><i class="fa fa-truck"></i> {!! $page_title or "Page Title" !!}</h1> --}}
+      <a class="btn btn-primary btn-lg" href="{{CRUDBooster::mainpath('add')}}"><i class="fa fa-truck"></i> Terima Paket</a>
   </div>
   <div class="panel-body">
       <table id="table" class="table table-striped table-hover" style="width:100%" data-page-length="25" data-order="[[ 0, &quot;desc&quot; ]]">
@@ -46,24 +47,34 @@ $(document).ready(function() {
     <tbody>
       @foreach($result as $row)
       <tr>
-        <td class="lead text-success">{{$row->id}}</td>
+        <td class="lead text-success">{{DB::table('users')->where('id',$row->idUser_pegawai_terima)->value('idunit')}}-{{$row->id}}</td>
         <td>{{$row->ket_paket}}</td>
         <td>{{DB::table('users')->where('id',$row->idUser_pegawai_terima)->value('name')}}</td>
         <td>{{DB::table('users')->join('unit','users.idunit','=','unit.id')->where('users.id',$row->idUser_pegawai_terima)->value('unit.direktorat')}}</td>
-        <td style="width:18%">
+        <td style="width:10%">
+          
           <!-- To make sure we have read access, wee need to validate the privilege -->
-          <a class='btn btn-primary btn-sm' href='{{CRUDBooster::mainpath("detail/$row->id")}}'><i class="fa fa-eye"></i> Detil</a>
+
+          <a class='btn btn-primary btn-sm' href='{{CRUDBooster::mainpath("detail/$row->id")}}' data-toggle="tooltip" data-placement="bottom" title="Detil"><i class="fa fa-eye"></i></a>
+
           @if(CRUDBooster::isUpdate() && $button_edit && empty($row->idUser_petugas_serah))
-          <a class='btn btn-success btn-sm' href='{{CRUDBooster::mainpath("edit/$row->id")}}'><i class="fa fa-dropbox"></i> Penyerahan</a>
+
+          <a class='btn btn-success btn-sm' href='{{CRUDBooster::mainpath("edit/$row->id")}}' data-toggle="tooltip" data-placement="bottom" title="Penyerahan"><i class="glyphicon glyphicon-share-alt"></i></a>
+
           @endif
           
           @if(CRUDBooster::isDelete() && $button_edit && empty($row->idUser_pegawai_serah))
-          <a class='btn btn-danger btn-sm' href='{{CRUDBooster::mainpath("delete/$row->id")}}'><i class="fa fa-trash"></i> Hapus</a>
+
+          <a class='btn btn-danger btn-sm' href='#' onclick='{{CRUDBooster::deleteConfirm(CRUDBooster::mainpath("delete/$row->id"))}}' data-toggle="tooltip" data-placement="bottom" title="Hapus"><i class="fa fa-trash"></i></a>
+
           @endif
 
           @if($row->idUser_pegawai_serah)
-          <i class="fa fa-check text-success"> Sudah Diserahkan</i>
+
+          <i class="glyphicon glyphicon-ok-sign text-success" data-toggle="tooltip" data-placement="bottom" title="Sudah Diserahkan"></i>
+
           @endif
+
         </td>
        </tr>
       @endforeach

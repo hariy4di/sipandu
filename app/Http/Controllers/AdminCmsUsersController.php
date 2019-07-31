@@ -37,7 +37,7 @@ class AdminCmsUsersController extends \crocodicstudio\crudbooster\controllers\CB
 		$this->form[] = array("label"=>"Username","name"=>"username",'required'=>true,'validation'=>'required|alpha_dash|unique:users,username,'.CRUDBooster::getCurrentId());		
 		$this->form[] = array("label"=>"Email","name"=>"email",'required'=>true,'type'=>'email','validation'=>'required|email|unique:users,email,'.CRUDBooster::getCurrentId());
 		$this->form[] = array("label"=>"No. HP (Whatsapp)","name"=>"no_hp",'validation'=>'alpha_num|regex:/^[0-9]+$/i|min:11|max:15');
-		$this->form[] = array("label"=>"Unit","name"=>"idunit","type"=>"select","datatable"=>"unit,direktorat",'nullable'=>true);
+		$this->form[] = array("label"=>"Unit","name"=>"idunit","type"=>"select","validation"=>"required","datatable"=>"unit,direktorat",'nullable'=>true);
 		$this->form[] = array("label"=>"Role","name"=>"id_cms_privileges","type"=>"select","datatable"=>"cms_privileges,name",'required'=>true);						
 		$this->form[] = array("label"=>"Foto","name"=>"photo","type"=>"upload","help"=>"Resolusi yang dianjurkan 200x200px",'validation'=>'image|max:1000','resize_width'=>90,'resize_height'=>90);											
 		// $this->form[] = array("label"=>"Password","name"=>"password","type"=>"password","help"=>"Please leave empty if not change");
@@ -66,4 +66,5 @@ class AdminCmsUsersController extends \crocodicstudio\crudbooster\controllers\CB
 	public function hook_before_add(&$postdata) {      
 	    unset($postdata['password_confirmation']);
 	}
+
 }

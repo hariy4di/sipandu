@@ -58,7 +58,7 @@
                     <div class="form-group">
                         <label for="detilPaket" class="col-sm-2 control-label">Detil Paket</label>
                         <div class="col-sm-10">
-                            <input id="detilPaket" type="text" name="ket_paket" required class="form-control"/>
+                            <input id="detilPaket" type="text" name="ket_paket" required="" oninvalid="this.setCustomValidity('Data tidak boleh kosong')" oninput="setCustomValidity('')" class="form-control"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -69,7 +69,7 @@
                                         <span class="glyphicon glyphicon-th"></span>
                                     </div>
                                     <?php $date = new Date(now()); ?>
-                                <input id="wkt_terima" type="text" name="wkt_terima" value="{{$date->format('Y-m-d')}}" required class="input_date form-control"/>
+                                <input id="wkt_terima" type="text" name="wkt_terima" value="{{$date->format('Y-m-d')}}" required="" oninvalid="this.setCustomValidity('Data tidak boleh kosong')" oninput="setCustomValidity('')" class="input_date form-control"/>
                                 
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                     <div class="form-group">
                         <label for="idUser_pegawai_terima" class="col-sm-2 control-label">Pegawai Tujuan</label>
                         <div class="col-sm-10">
-                        <select id="idUser_pegawai_terima" name="idUser_pegawai_terima" class="select2 form-control">
+                        <select id="idUser_pegawai_terima" name="idUser_pegawai_terima" required="" oninvalid="this.setCustomValidity('Pilih salah satu!')" onchange="setCustomValidity('')" class="select2 form-control">
                             <option value="">** Silahkan Pilih Pegawai Tujuan</option>
                                 @foreach ($idUser_pegawai_terima as $s)
                         <option value="{{$s->id}}">{{$s->name}} - {{$s->direktorat}} - {{$s->no_hp}}</option>

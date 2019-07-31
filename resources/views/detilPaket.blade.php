@@ -7,7 +7,7 @@
             <div class="form-group col-sm-12">
                     <label for="idPaket" class="col-sm-2-pull col-md-2 control-label">ID Paket</label>
                     <div class="col-sm-10-push col-md-10">
-                        <h1 id="idPaket">{{$row->id}}</h1>
+                        <h1 id="idPaket">{{DB::table('users')->where('id',$row->idUser_pegawai_terima)->value('idunit')}}-{{$row->id}}</h1>
                     </div>
             </div>
             <div class="form-group col-sm-12">

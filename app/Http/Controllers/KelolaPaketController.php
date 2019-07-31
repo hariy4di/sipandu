@@ -49,11 +49,11 @@ class KelolaPaketController extends \crocodicstudio\crudbooster\controllers\CBCo
 			$this->form = [];
 			$this->form[] = ['label'=>'Paket','name'=>'ket_paket','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Tanggal Terima','name'=>'wkt_terima','type'=>'date','validation'=>'required','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Petugas Penerima','name'=>'idUser_petugas_terima','type'=>'hidden','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Pegawai Tujuan','name'=>'idUser_pegawai_terima','type'=>'select','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Petugas Penerima','name'=>'idUser_petugas_terima','type'=>'hidden','validation'=>'integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Pegawai Tujuan','name'=>'idUser_pegawai_terima','type'=>'select','validation'=>'integer|min:0','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Tanggal Penyerahan','name'=>'wkt_serah','type'=>'date','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Petugas Penyerahan','name'=>'idUser_petugas_serah','type'=>'hidden','validation'=>'integer|min:0','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Diterima oleh','name'=>'idUser_pegawai_serah','type'=>'select','validation'=>'integer|min:0','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Diterima oleh','name'=>'idUser_pegawai_serah','type'=>'select','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
@@ -281,6 +281,9 @@ class KelolaPaketController extends \crocodicstudio\crudbooster\controllers\CBCo
 			$data['row']        = DB::table('paket')->where('id',$id)->first();		
 			$this->cbView('detilPaket',$data);
 		}
+
+		
+
 
 	    /*
 	    | ---------------------------------------------------------------------- 

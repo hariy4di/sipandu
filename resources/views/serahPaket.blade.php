@@ -55,10 +55,11 @@
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <input type="hidden" name="wkt_terima" value="{{$row->wkt_terima}}">
                     <input type="hidden" name="idUser_petugas_serah" value="{{CRUDBooster::myId()}}">
+                    <input type="hidden" name="idUser_pegawai_terima" value="{{$row->idUser_pegawai_terima}}">
                     <div class="form-group">
                         <label for="detilPaket" class="col-sm-2 control-label">Detil Paket</label>
                         <div class="col-sm-10">
-                            <input id="detilPaket" type="text" name="ket_paket" value="{{$row->ket_paket}}" required class="form-control"/>
+                            <input id="detilPaket" type="text" name="ket_paket" value="{{$row->ket_paket}}" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" oninput="setCustomValidity('')" class="form-control" readonly/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -69,7 +70,7 @@
                                         <span class="glyphicon glyphicon-th"></span>
                                     </div>
                                     <?php $date = new Date(now()); ?>
-                                <input id="wkt_serah" type="text" name="wkt_serah" value="{{$date->format('Y-m-d')}}" required class="input_date form-control"/>
+                                <input id="wkt_serah" type="text" name="wkt_serah" value="{{$date->format('Y-m-d')}}" required="" oninvalid="this.setCustomValidity('Data tidak boleh kosong')" oninput="setCustomValidity('')" class="input_date form-control"/>
                                 
                             </div>
                         </div>
@@ -77,10 +78,10 @@
                     <div class="form-group">
                         <label for="idUser_pegawai_serah" class="col-sm-2 control-label">Diterima Oleh</label>
                         <div class="col-sm-10">
-                        <select id="idUser_pegawai_serah" name="idUser_pegawai_serah" class="form-control">
+                        <select id="idUser_pegawai_serah" name="idUser_pegawai_serah" class="form-control" required  oninvalid="this.setCustomValidity('Pilih salah satu!')" onchange="setCustomValidity('')">
                                 <option value="">** Silahkan Pilih Pegawai Penerima Penyerahan</option>
                                 @foreach ($idUser_pegawai_serah as $s)
-                                    <option {{ ($s->id == $row->idUser_pegawai_serah)?"selected":"" }} value="{{$s->id}}">{{$s->name}} - {{$s->direktorat}} - {{$s->no_hp}}</option>
+                                    <option value='{{$s->id}}'>{{$s->name}} - {{$s->direktorat}} - {{$s->no_hp}}</option>
                                 @endforeach
                         </select>
                         </div>
@@ -90,6 +91,13 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2"></label>
                     <div class="col-sm-10">
+                            @if(g('return_url'))
+                            <a href='{{g("return_url")}}' class='btn btn-default'><i
+                                        class='fa fa-chevron-circle-left'></i> {{trans("crudbooster.button_back")}}</a>
+                        @else
+                            <a href='{{CRUDBooster::mainpath("?".http_build_query(@$_GET)) }}' class='btn btn-default'><i
+                                        class='fa fa-chevron-circle-left'></i> {{trans("crudbooster.button_back")}}</a>
+                        @endif
                         <input type="submit" class="btn btn-success" value="Simpan"/>
                     </div>
                 </div>

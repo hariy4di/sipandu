@@ -37,7 +37,9 @@ $(document).ready(function() {
     <thead>
       <tr>
         <th>ID Paket</th>
+        @if ($isunit != 1)
         <th>Detil Paket</th>
+        @endif
         @if ($isunit == 1)
           <th>Tujuan</th> 
         @endif
@@ -51,12 +53,14 @@ $(document).ready(function() {
       @foreach($result as $row)
       <tr>
           @if(empty($row->id02))
-        <td class="lead text-success">{{$row->id}}</td>
+        <td class="lead text-success">{{DB::table('users')->where('id',$row->idUser_pegawai_terima)->value('idunit')}}-{{$row->id}}</td>
         @endif
         @if($row->id02)
-        <td class="lead text-success">{{$row->id02}}</td>
+        <td class="lead text-success">{{DB::table('users')->where('id',$row->idUser_pegawai_terima)->value('idunit')}}-{{$row->id02}}</td>
         @endif
+        @if(empty($row->id02))
         <td>{{$row->ket_paket}}</td>
+        @endif
         @if ($row->id02)
           <td>{{DB::table('users')->where('id',$row->idUser_pegawai_terima)->value('name')}}</td>  
         @endif
