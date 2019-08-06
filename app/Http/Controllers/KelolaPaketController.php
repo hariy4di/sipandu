@@ -330,7 +330,7 @@ class KelolaPaketController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    */
 	    public function hook_before_add(&$postdata) {        
 	        //Your code here
-
+			
 	    }
 
 	    /* 
@@ -340,18 +340,20 @@ class KelolaPaketController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    | @id = last insert id
 	    | 
 	    */
-	    public function hook_after_add($id) {        
-	        $config['content'] = "Ada sebuah paket untuk Anda dengan ID: $id";
-			$config['to'] = CRUDBooster::adminPath('paketku');
-			$config['id_cms_users'] = [DB::table('paket')->where('id',$id)->value('idUser_pegawai_terima')]; //The Id of the user that is going to receive notification. This could be an array of id users [1,2,3,4,5]
-			CRUDBooster::sendNotification($config);
-
+	    public function hook_after_add($id) {
 			$data= DB::table('paket')
 						->join('users','paket.idUser_pegawai_terima','=','users.id')
 						->join('unit','users.idunit','=','unit.id')
 						->select('paket.id as id','paket.ket_paket as ket_paket','users.id as idUser','unit.id as unitId','users.name as name','unit.direktorat as direktorat','users.email as email')
 						->where('paket.id',$id)
 						->first();
+			
+	        $config['content'] = "Ada sebuah paket untuk Anda dengan ID: $data->unitId - $id";
+			$config['to'] = CRUDBooster::adminPath('paketku');
+			$config['id_cms_users'] = [DB::table('paket')->where('id',$id)->value('idUser_pegawai_terima')]; //The Id of the user that is going to receive notification. This could be an array of id users [1,2,3,4,5]
+			CRUDBooster::sendNotification($config);
+
+			
 
 				CRUDBooster::sendEmail(['to'=>$data->email,'data'=>$data,'template'=>'paket-baru','attachments'=>[]]);
 				//dd($datas);
@@ -368,8 +370,8 @@ class KelolaPaketController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    | 
 	    */
 	    public function hook_before_edit(&$postdata,$id) {        
-	        //Your code here
-
+			//Your code here
+			
 	    }
 
 	    /* 
@@ -380,8 +382,18 @@ class KelolaPaketController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    | 
 	    */
 	    public function hook_after_edit($id) {
-	        //Your code here 
+			//Your code here 
+			$data= DB::table('paket')
+						->join('users','paket.idUser_pegawai_terima','=','users.id')
+						->join('unit','users.idunit','=','unit.id')
+						->select('paket.id as id','paket.ket_paket as ket_paket','users.id as idUser','unit.id as unitId','users.name as name','unit.direktorat as direktorat','users.email as email')
+						->where('paket.id',$id)
+						->first();
 
+			$config['content'] = "Paket Anda dengan ID: $data->unitId - $id telah diserahkan";
+			$config['to'] = CRUDBooster::adminPath('paketku');
+			$config['id_cms_users'] = [DB::table('paket')->where('id',$id)->value('idUser_pegawai_terima')]; //The Id of the user that is going to receive notification. This could be an array of id users [1,2,3,4,5]
+			CRUDBooster::sendNotification($config);
 	    }
 
 	    /* 
@@ -393,7 +405,17 @@ class KelolaPaketController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    */
 	    public function hook_before_delete($id) {
 	        //Your code here
+			$data= DB::table('paket')
+						->join('users','paket.idUser_pegawai_terima','=','users.id')
+						->join('unit','users.idunit','=','unit.id')
+						->select('paket.id as id','paket.ket_paket as ket_paket','users.id as idUser','unit.id as unitId','users.name as name','unit.direktorat as direktorat','users.email as email')
+						->where('paket.id',$id)
+						->first();
 
+			$config['content'] = "Maaf, telah terjadi kesalahan input terkait paket dengan ID: $data->unitId - $id";
+			$config['to'] = CRUDBooster::adminPath('notifications');
+			$config['id_cms_users'] = [DB::table('paket')->where('id',$id)->value('idUser_pegawai_terima')]; //The Id of the user that is going to receive notification. This could be an array of id users [1,2,3,4,5]
+			CRUDBooster::sendNotification($config);
 	    }
 
 	    /* 
@@ -405,7 +427,7 @@ class KelolaPaketController extends \crocodicstudio\crudbooster\controllers\CBCo
 	    */
 	    public function hook_after_delete($id) {
 			//Your code here
-
+			
 	    }
 
 

@@ -33,10 +33,7 @@
         $('#idUser_pegawai_serah').select2();
         $('.input_date').datepicker({
                 format: 'yyyy-mm-dd',
-                @if (in_array(App::getLocale(), ['ar', 'fa']))
-                rtl: true,
-                @endif
-                language: lang
+                startDate: new Date($('#wkt_terima').val())
             });
 
             $('.open-datetimepicker').click(function () {
@@ -44,6 +41,7 @@
             });
     });
     </script>
+    
 @endpush
 
 @section('content')
@@ -53,7 +51,7 @@
         <form class="form-horizontal" method="POST" action="{{CRUDBooster::mainpath('edit-save/'.$row->id)}}">
             <div class="panel-body">             
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
-                    <input type="hidden" name="wkt_terima" value="{{$row->wkt_terima}}">
+                    <input type="hidden" name="wkt_terima" value="{{$row->wkt_terima}}" id="wkt_terima">
                     <input type="hidden" name="idUser_petugas_serah" value="{{CRUDBooster::myId()}}">
                     <input type="hidden" name="idUser_pegawai_terima" value="{{$row->idUser_pegawai_terima}}">
                     <div class="form-group">
@@ -69,8 +67,9 @@
                                 <div class="input-group-addon">
                                         <span class="glyphicon glyphicon-th"></span>
                                     </div>
-                                    <?php $date = new Date(now()); ?>
-                                <input id="wkt_serah" type="text" name="wkt_serah" value="{{$date->format('Y-m-d')}}" required="" oninvalid="this.setCustomValidity('Data tidak boleh kosong')" oninput="setCustomValidity('')" class="input_date form-control"/>
+                                    <?php $date = new Date(now()); 
+                                    ?>
+                                <input id="wkt_serah" type="text" name="wkt_serah" value="{{$date->format('Y-m-d')}}" required="" oninvalid="this.setCustomValidity('Data tidak boleh kosong')" onchange="setCustomValidity('')" class="input_date form-control"/>
                                 
                             </div>
                         </div>
